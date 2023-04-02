@@ -7,7 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Операции:\n1. Добавить;\n2. Показать;\n3. Удалить.\nВыберите операцию:");
+            System.out.println("Операции:\n1. Добавить;\n2. Показать;\n3. Удалить;\n4. Поиск.\nВыберите операцию:");
             String number = scanner.next();
             switch (number) {
                 case "1":
@@ -28,14 +28,30 @@ public class Main {
                     String deletePurchase = scanner.next();
                     try {
                         int positionDelete = Integer.parseInt(deletePurchase) - 1;
-                        String purchase = list.get(positionDelete);
+                        deletePurchase = list.get(positionDelete);
                         list.remove(positionDelete);
-                        System.out.println("\nПокупка \"" + purchase + "\" удалена, список покупок:");
                     } catch (Exception e) {
                         list.remove(deletePurchase);
-                        System.out.println("\nПокупка \"" + deletePurchase + "\" удалена, список покупок:");
                     }
+                    System.out.println("\nПокупка \"" + deletePurchase + "\" удалена, список покупок:");
                     printList(list);
+                    break;
+
+                case "4":
+                    System.out.println("\nВведите текст для поиска:");
+                    String itemLower = scanner.next().toLowerCase();
+                    int n = 0;
+                    System.out.println("\nНайдено:");
+                    for (int i = 0; i < list.size(); i++) {
+                        String queryLower = list.get(i).toLowerCase();
+                        if (itemLower.contains(queryLower)) {
+                            System.out.println((i + 1) + ". " + list.get(i));
+                            n++;
+                        }
+                    }
+                    if (n == 0) {
+                        System.out.println("<Ничего>");
+                    }
                     break;
 
                 default:
