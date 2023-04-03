@@ -11,9 +11,7 @@ public class Main {
             String number = scanner.next();
             switch (number) {
                 case "1":
-                    System.out.println("\nКакую покупку хотите добавить?");
-                    list.add(scanner.next());
-                    System.out.println("Итого в списке покупок:" + list.size());
+                    addProduct(list, scanner);
                     break;
 
                 case "2":
@@ -22,42 +20,57 @@ public class Main {
                     break;
 
                 case "3":
-                    System.out.println("\nСписок покупок:");
-                    printList(list);
-                    System.out.println("Какую хотите удалить? Введите номер или название");
-                    String deletePurchase = scanner.next();
-                    try {
-                        int positionDelete = Integer.parseInt(deletePurchase) - 1;
-                        deletePurchase = list.get(positionDelete);
-                        list.remove(positionDelete);
-                    } catch (Exception e) {
-                        list.remove(deletePurchase);
-                    }
-                    System.out.println("\nПокупка \"" + deletePurchase + "\" удалена, список покупок:");
-                    printList(list);
+                    deleteProduct(list, scanner);
                     break;
 
                 case "4":
-                    System.out.println("\nВведите текст для поиска:");
-                    String itemLower = scanner.next().toLowerCase();
-                    int n = 0;
-                    System.out.println("\nНайдено:");
-                    for (int i = 0; i < list.size(); i++) {
-                        String queryLower = list.get(i).toLowerCase();
-                        if (itemLower.contains(queryLower)) {
-                            System.out.println((i + 1) + ". " + list.get(i));
-                            n++;
-                        }
-                    }
-                    if (n == 0) {
-                        System.out.println("<Ничего>");
-                    }
+                    searchProduct(list, scanner);
                     break;
 
                 default:
                     System.out.println("Неправильная команда");
             }
         }
+    }
+
+    private static void searchProduct(ArrayList<String> list, Scanner scanner) {
+        System.out.println("\nВведите текст для поиска:");
+        String itemLower = scanner.next().toLowerCase();
+        int n = 0;
+        System.out.println("\nНайдено:");
+        for (int i = 0; i < list.size(); i++) {
+            String queryLower = list.get(i).toLowerCase();
+            if (itemLower.contains(queryLower)) {
+                System.out.println((i + 1) + ". " + list.get(i));
+                n++;
+            }
+        }
+        if (n == 0) {
+            System.out.println("<Ничего>");
+        }
+    }
+
+    private static void deleteProduct(ArrayList<String> list, Scanner scanner) {
+        System.out.println("\nСписок покупок:");
+        printList(list);
+        System.out.println("Какую хотите удалить? Введите номер или название");
+        String deletePurchase = scanner.next();
+        try {
+            int positionDelete = Integer.parseInt(deletePurchase) - 1;
+            deletePurchase = list.get(positionDelete);
+            list.remove(positionDelete);
+        } catch (Exception e) {
+            list.remove(deletePurchase);
+        }
+        System.out.println("\nПокупка \"" + deletePurchase + "\" удалена, список покупок:");
+        printList(list);
+    }
+
+    private static void addProduct(ArrayList<String> list, Scanner scanner) {
+        System.out.println("\nКакую покупку хотите добавить?");
+        list.add(scanner.next());
+        System.out.println("Итого в списке покупок:" + list.size());
+        return;
     }
 
     public static void printList(ArrayList<String> list) {
